@@ -35,9 +35,10 @@ cmd open &{{
 }}
 
 # mkdir command. See wiki if you want it to select created dir
-map a :push %mkdir<space>
-map ; :push :
-map ga cd /sdcard
+cmd mkdir %IFS=" "; mkdir -- "$*"
+map a push :mkdir<space>
+map ; push :
+map gs cd ~/storage/shared/
 
 ## autojump
 # cmd aj %lf -remote "send $id cd '$(autojump $1 } sed 's/\\/\\\\/g;s/"/\\"/g')'"

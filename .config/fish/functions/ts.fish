@@ -3,13 +3,8 @@ function ts --description "convert mkv and ass to srt"
   argparse "#max" -- $argv
   for org in $argv
     set -l srt "$(string replace -r '\.(mkv|ass)$' '.srt' "$org")"
-    ffmpeg -i "$org" -map "0:s:$_flag_max" "$srt"
+    ffmpeg -v 8 -i "$org" -map "0:s:$_flag_max" "$srt"
 
-    sed -i -E \
-      -e 's/ face="[^"]+"//g' \
-      -e 's/ size="[0-9]+"//g' \
-      -e 's/ي/ی/g' \
-      -e 's/ه( |‌)ی /ۀ /g' \
-      "$srt"
+    ffasrt "$srt"
   end
 end
