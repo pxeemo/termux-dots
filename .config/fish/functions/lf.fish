@@ -1,14 +1,6 @@
 function lf
-    set tmp (mktemp)
-    # `command` is needed in case `lfcd` is aliased to `lf`
-    command lf -last-dir-path=$tmp $argv
-    if test -f "$tmp"
-        set dir (cat $tmp)
-        rm -f $tmp
-        if test -d "$dir"
-            if test "$dir" != (pwd)
-                cd $dir
-            end
-        end
+    set last_dir (command lf -print-last-dir $argv)
+    if test -n $last_dir
+        cd $last_dir
     end
 end

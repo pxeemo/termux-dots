@@ -5,6 +5,8 @@ if status is-interactive
     abbr tms termux-media-scan
     abbr tcg termux-clipboard-get
     abbr tcs termux-clipboard-set
+    abbr twl termux-wake-lock
+    abbr twu termux-wake-unlock
 
     zoxide init fish | source
 end

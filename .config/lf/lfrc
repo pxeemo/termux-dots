@@ -38,7 +38,11 @@ cmd open &{{
 cmd mkdir %IFS=" "; mkdir -- "$*"
 map a push :mkdir<space>
 map ; push :
+map gc cd ~/.config/
 map gs cd ~/storage/shared/
+map gd cd ~/storage/downloads/
+map gm cd ~/storage/music/
+map gv cd ~/storage/movies/
 
 ## autojump
 # cmd aj %lf -remote "send $id cd '$(autojump $1 } sed 's/\\/\\\\/g;s/"/\\"/g')'"
@@ -76,6 +80,10 @@ cmd zip ${{
     cp -r $fx $1
     zip -r $1.zip $1
     rm -rf $1
+}}
+
+cmd zstd ${{
+    tar -I 'zstd' -cvf "$f".tar.zst "$fx"
 }}
 
 # edit config
