@@ -1,0 +1,15 @@
+#!/bin/bash
+
+URL=$1
+music_dir="/storage/emulated/0/Music"
+
+yt-dlp --extract-audio --audio-format mp3 \
+  --embed-thumbnail --no-mtime --embed-metadata \
+  --output "${music_dir}/%(artist)s - %(track)s.%(ext)s" \
+  "$URL" || exit 1
+
+file_path=`find "$music_dir" -type f -printf '%T@ %p\n' | \
+  sort | cut -d' ' -f2- | tail -1`
+python $HOME/bin/lrcsy "$file_path"
+termux-media-scan "$music_dir"
+read

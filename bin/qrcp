@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+# show with qrcode
+ip_addr=$(ifconfig 2>/dev/null | awk '/inet 192/{print$2}')
+qrencode -t ansiutf8 "${ip_addr}:8800"
+# server files 
+python -m http.server 8800
+
+
