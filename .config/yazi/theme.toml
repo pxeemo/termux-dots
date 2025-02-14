@@ -1,5 +1,8 @@
-# A TOML linter such as https://taplo.tamasfe.dev/ can use this schema to validate your config.
-# If you encounter any issues, please make an issue at https://github.com/yazi-rs/schemas.
+# If the user's terminal is in dark mode, Yazi will load `theme-dark.toml` on startup; otherwise, `theme-light.toml`.
+# You can override any parts of them that are not related to the dark/light mode in your own `theme.toml`.
+
+# If you want to dynamically override their content based on dark/light mode, you can specify two different flavors
+# for dark and light modes under `[flavor]`, and do so in those flavors instead.
 "$schema" = "https://yazi-rs.github.io/schemas/theme.json"
 
 # vim:fileencoding=utf-8:foldmethod=marker
@@ -7,9 +10,11 @@
 # : Flavor {{{
 
 [flavor]
-use = ""
+dark  = ""
+light = ""
 
 # : }}}
+
 
 # : Manager {{{
 
@@ -50,7 +55,25 @@ syntect_theme = ""
 # : }}}
 
 
-# : Status {{{
+# : Mode {{{
+
+[mode]
+
+normal_main = { fg = "black", bg = "blue", bold = true }
+normal_alt  = { fg = "black", bg = "gray" }
+
+# Select mode
+select_main = { fg = "black", bg = "red", bold = true }
+select_alt  = { fg = "black", bg = "gray" }
+
+# Unset mode
+unset_main = { fg = "black", bg = "red", bold = true }
+unset_alt  = { fg = "black", bg = "gray" }
+
+# : }}}
+
+
+# : Status bar {{{
 
 [status]
 separator_open  = "" # ""
@@ -68,18 +91,70 @@ progress_normal = { fg = "blue", bg = "black" }
 progress_error  = { fg = "red", bg = "black" }
 
 # Permissions
-permissions_t = { fg = "green" }
-permissions_r = { fg = "yellow" }
-permissions_w = { fg = "red" }
-permissions_x = { fg = "cyan" }
-permissions_s = { fg = "darkgray" }
+perm_sep   = { fg = "darkgray" }
+perm_type  = { fg = "green" }
+perm_read  = { fg = "yellow" }
+perm_write = { fg = "red" }
+perm_exec  = { fg = "cyan" }
 
 # : }}}
 
 
-# : Select {{{
+# : Which {{{
 
-[select]
+[which]
+cols            = 1
+mask            = { bg = "black" }
+cand            = { fg = "lightcyan" }
+rest            = { fg = "darkgray" }
+desc            = { fg = "lightmagenta" }
+separator       = "  "
+separator_style = { fg = "darkgray" }
+
+# : }}}
+
+
+# : Confirmation {{{
+
+[confirm]
+border     = { fg = "blue" }
+title      = { fg = "blue" }
+content    = {}
+list       = {}
+btn_yes    = { reversed = true }
+btn_no     = {}
+btn_labels = [ "  [Y]es  ", "  (N)o  " ]
+
+# : }}}
+
+
+# : Spotter {{{
+
+[spot]
+border = { fg = "blue" }
+title  = { fg = "blue" }
+
+# : }}}
+
+
+# : Notification {{{
+
+[notify]
+title_info  = { fg = "green" }
+title_warn  = { fg = "yellow" }
+title_error = { fg = "red" }
+
+# Icons
+icon_info  = ""
+icon_warn  = ""
+icon_error = ""
+
+# : }}}
+
+
+# : Picker {{{
+
+[pick]
 border   = { fg = "blue" }
 active   = { fg = "magenta", bold = true }
 inactive = {}
@@ -113,7 +188,7 @@ icon_command = ""
 # : }}}
 
 
-# : Tasks {{{
+# : Task manager {{{
 
 [tasks]
 border  = { fg = "blue" }
@@ -123,21 +198,7 @@ hovered = { fg = "magenta", underline = true }
 # : }}}
 
 
-# : Which {{{
-
-[which]
-cols            = 1
-mask            = { bg = "black" }
-cand            = { fg = "lightcyan" }
-rest            = { fg = "darkgray" }
-desc            = { fg = "lightmagenta" }
-separator       = "  "
-separator_style = { fg = "darkgray" }
-
-# : }}}
-
-
-# : Help {{{
+# : Help menu {{{
 
 [help]
 on      = { fg = "cyan" }
@@ -145,21 +206,6 @@ run     = { fg = "magenta" }
 desc    = {}
 hovered = { reversed = true, bold = true }
 footer  = { fg = "black", bg = "white" }
-
-# : }}}
-
-
-# : Notify {{{
-
-[notify]
-title_info  = { fg = "green" }
-title_warn  = { fg = "yellow" }
-title_error = { fg = "red" }
-
-# Icons
-icon_info  = ""
-icon_warn  = ""
-icon_error = ""
 
 # : }}}
 
@@ -176,15 +222,13 @@ rules = [
 	{ mime = "{audio,video}/*", fg = "magenta" },
 
 	# Archives
-	{ mime = "application/zstd", fg = "red" },
-	{ mime = "application/{,g}zip", fg = "red" },
-	{ mime = "application/x-{tar,bzip*,7z-compressed,xz,rar}", fg = "red" },
+	{ mime = "application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}", fg = "red" },
 
 	# Documents
-	{ mime = "application/{pdf,doc,rtf,vnd.*}", fg = "yellow" },
+	{ mime = "application/{pdf,doc,rtf}", fg = "cyan" },
 
 	# Empty files
-	# { mime = "inode/x-empty", fg = "red" },
+	# { mime = "inode/empty", fg = "red" },
 
 	# Special files
 	{ name = "*", is = "orphan", bg = "red" },
@@ -199,12 +243,17 @@ rules = [
 	{ name = "*/", fg = "blue" }
 ]
 
+# : }}}
+
+
+# : Icons {{{
+
 [icon]
 
 globs = []
 dirs  = []
 files = []
-exts =  []
+exts = []
 conds = []
 
 # : }}}
