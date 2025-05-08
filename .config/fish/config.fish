@@ -8,6 +8,12 @@ if status is-interactive
     abbr tcs termux-clipboard-set
     abbr twl termux-wake-lock
     abbr twu termux-wake-unlock
+    abbr trs termux-reload-settings
+    abbr wl wakelocker
+
+    bind alt-backspace backward-kill-token
+    bind alt-left prevd-or-backward-token
+    bind alt-right nextd-or-forward-token
 
     zoxide init fish | source
 end

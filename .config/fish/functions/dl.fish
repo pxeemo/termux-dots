@@ -1,5 +1,5 @@
-function dl --wraps=aria2c --description 'alias of aria2c'
-  termux-wake-lock
+function dl --wraps=aria2c --description='alias of aria2c'
+  wakelocker add
   set retries 5
   while test $retries -ne 0 && not aria2c \
     --max-concurrent-downloads=2 \
@@ -20,14 +20,12 @@ function dl --wraps=aria2c --description 'alias of aria2c'
 
   and termux-notification \
     --title aria2c \
-    --content "Downloads complete" \
-    --icon download_done
+    --content "Downloads Complete" \
+    --icon file_download_done
   or termux-notification \
     --title aria2c \
-    --content "Downloads failed" \
-    --icon download_done
+    --content "Downloads Failed" \
+    --icon highlight_off
 
-  if test (pgrep -c aria2c) -eq 0
-    termux-wake-unlock
-  end
+  wakelocker remove
 end
