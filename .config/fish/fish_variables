@@ -5,7 +5,7 @@ SETUVAR --export FZF_DEFAULT_OPTS:\x2d\x2dcolor\x3dbg\x2b\x3a\x23313244\x2cspinn
 SETUVAR --export MANPAGER:nvim\x20\x2bMan\x21
 SETUVAR --export PAGER:bat
 SETUVAR --export TYPST_FONT_PATHS:/storage/emulated/0/Documents/fonts/
-SETUVAR --export WL:/data/data/com\x2etermux/files/usr/tmp/wakelocks
+SETUVAR --export WL:0
 SETUVAR __fish_initialized:3800
 SETUVAR fish_color_autosuggestion:brblack
 SETUVAR fish_color_cancel:\x2dr

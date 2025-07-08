@@ -1,17 +1,18 @@
 function wakelocker
     if test $argv[1] = add
-        touch $WL
-        if test (cat $WL) -eq 0
+        set -Ux WL (math $WL + 1)
+        if test $WL -eq 1
             termux-wake-lock
         end
-        math (cat $WL) +1 > $WL
     else if test $argv[1] = remove
-        set lockers (cat $WL)
-        test $lockers -eq 0 && return 1
-        if test $lockers -eq 1
+        test $WL -eq 0 && return 1
+        if test $WL -eq 1
             termux-wake-unlock
         end
-        math $lockers -1 > $WL
+        set -Ux WL (math $WL - 1)
+    else if test $argv[1] = reset
+        set -Ux WL 0
+        termux-wake-unlock
     else
         wakelocker add
         eval $argv

@@ -134,6 +134,7 @@ cmd preview !{{
     chafa "$f"
 }}
 map I preview
+map i $bat --paging=always --pager="less --RAW-CONTROL-CHARS --incsearch --ignore-case --mouse" $f
 
 cmd z %{{
     result="$(zoxide query --exclude $PWD $@ | sed 's/\\/\\\\/g;s/"/\\"/g')"
